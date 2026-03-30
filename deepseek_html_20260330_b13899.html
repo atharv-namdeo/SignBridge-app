@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#F5F5F7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SmartSign">
+    <link rel="manifest" href="manifest.json">
+    <title>SmartSign - Sign Language Translator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation Bar -->
+        <nav class="bottom-nav" id="bottomNav">
+            <button class="nav-item active" data-page="dashboard">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" fill="currentColor"/>
+                </svg>
+                <span>Home</span>
+            </button>
+            <button class="nav-item" data-page="camera">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 15.2c-1.8 0-3.2-1.4-3.2-3.2s1.4-3.2 3.2-3.2 3.2 1.4 3.2 3.2-1.4 3.2-3.2 3.2z" fill="currentColor"/>
+                    <path d="M9 2L7.2 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.2L15 2H9zm3 16c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z" fill="currentColor"/>
+                </svg>
+                <span>Camera</span>
+            </button>
+            <button class="nav-item" data-page="iot">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="currentColor"/>
+                </svg>
+                <span>IoT</span>
+            </button>
+            <button class="nav-item" data-page="macros">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 18H6V4h7v5h5v11z" fill="currentColor"/>
+                </svg>
+                <span>Macros</span>
+            </button>
+            <button class="nav-item" data-page="settings">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94 0 .31.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-2 0-3.6-1.6-3.6-3.6s1.6-3.6 3.6-3.6 3.6 1.6 3.6 3.6-1.6 3.6-3.6 3.6z" fill="currentColor"/>
+                </svg>
+                <span>Settings</span>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboardPage" class="page active">
+                <div class="dashboard-container">
+                    <div class="header">
+                        <h1>Welcome back</h1>
+                        <p class="subtitle">Today's Overview</p>
+                    </div>
+
+                    <!-- Bento Grid -->
+                    <div class="bento-grid">
+                        <div class="bento-card stats-card" id="statsCard">
+                            <div class="card-content">
+                                <div class="stat-number" id="signCount">0</div>
+                                <div class="stat-label">Signs Today</div>
+                            </div>
+                        </div>
+                        <div class="bento-card macro-card" id="macroCard">
+                            <div class="card-content">
+                                <div class="stat-number" id="activeMacros">3</div>
+                                <div class="stat-label">Active Macros</div>
+                            </div>
+                        </div>
+                        <div class="bento-card recent-card" id="recentCard">
+                            <div class="card-content">
+                                <div class="card-title">Recent</div>
+                                <div class="recent-list" id="recentList">
+                                    <div class="recent-item">I need water</div>
+                                    <div class="recent-item">Hello</div>
+                                    <div class="recent-item">Thank you</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bento-card devices-card" id="devicesCard">
+                            <div class="card-content">
+                                <div class="stat-number" id="connectedDevices">2</div>
+                                <div class="stat-label">Connected Devices</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Audio Sniffer -->
+                    <div class="audio-sniffer" id="audioSniffer">
+                        <div class="sniffer-header">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/>
+                                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" fill="currentColor"/>
+                                <path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="currentColor"/>
+                            </svg>
+                            <span>Audio Sniffer</span>
+                        </div>
+                        <div class="noise-indicator" id="noiseIndicator">
+                            <div class="noise-bar" id="noiseBar"></div>
+                        </div>
+                        <div class="noise-text" id="noiseText">Noise Level: Low</div>
+                        <canvas id="waveform" class="waveform"></canvas>
+                    </div>
+
+                    <!-- Smart Phrases -->
+                    <div class="smart-phrases">
+                        <h3>Smart Phrases</h3>
+                        <div class="phrase-chips">
+                            <button class="phrase-chip" data-phrase="I need water">💧 I need water</button>
+                            <button class="phrase-chip" data-phrase="Help me">🆘 Help me</button>
+                            <button class="phrase-chip" data-phrase="Call doctor">🏥 Call doctor</button>
+                            <button class="phrase-chip" data-phrase="Where is bathroom?">🚻 Where is bathroom?</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Camera Page -->
+            <div id="cameraPage" class="page">
+                <div class="camera-container">
+                    <div class="camera-view" id="cameraView">
+                        <video id="video" autoplay playsinline muted></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                        <div class="camera-overlay">
+                            <div class="detection-status" id="detectionStatus">
+                                <div class="status-dot"></div>
+                                <span>Detecting signs...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="translation-result" id="translationResult">
+                        <div class="result-text">Ready to translate</div>
+                        <button class="speak-button" id="speakButton">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/>
+                            </svg>
+                            Speak
+                        </button>
+                    </div>
+                    <div class="confidence-indicator">
+                        <div class="confidence-label">Confidence</div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IoT Page -->
+            <div id="iotPage" class="page">
+                <div class="iot-container">
+                    <div class="header">
+                        <h1>Smart Home Control</h1>
+                        <p class="subtitle">Sign-to-Action Devices</p>
+                    </div>
+
+                    <div class="devices-grid" id="devicesGrid">
+                        <div class="device-card" data-device="light">
+                            <div class="device-icon">💡</div>
+                            <div class="device-name">Living Room Light</div>
+                            <div class="device-status" id="lightStatus">Off</div>
+                            <button class="device-control" data-device="light" data-action="toggle">
+                                Toggle
+                            </button>
+                            <div class="sign-mapping">Sign: "Light"</div>
+                        </div>
+                        <div class="device-card" data-device="fan">
+                            <div class="device-icon">🌀</div>
+                            <div class="device-name">Ceiling Fan</div>
+                            <div class="device-status" id="fanStatus">Off</div>
+                            <button class="device-control" data-device="fan" data-action="toggle">
+                                Toggle
+                            </button>
+                            <div class="sign-mapping">Sign: "Fan"</div>
+                        </div>
+                        <div class="device-card" data-device="ac">
+                            <div class="device-icon">❄️</div>
+                            <div class="device-name">Air Conditioner</div>
+                            <div class="device-status" id="acStatus">Off</div>
+                            <button class="device-control" data-device="ac" data-action="toggle">
+                                Toggle
+                            </button>
+                            <div class="sign-mapping">Sign: "AC"</div>
+                        </div>
+                    </div>
+
+                    <div class="add-device">
+                        <button class="add-device-button" id="addDeviceBtn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/>
+                            </svg>
+                            Add New Device
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Macros Page -->
+            <div id="macrosPage" class="page">
+                <div class="macros-container">
+                    <div class="header">
+                        <h1>Custom Macros</h1>
+                        <p class="subtitle">Record custom sign triggers</p>
+                    </div>
+
+                    <div class="record-macro" id="recordMacro">
+                        <div class="record-header">
+                            <h3>Record New Macro</h3>
+                            <button class="record-button" id="startRecording">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="8" fill="currentColor"/>
+                                </svg>
+                                Start Recording
+                            </button>
+                        </div>
+                        <div class="recording-status" id="recordingStatus" style="display: none;">
+                            <div class="recording-pulse"></div>
+                            <span>Recording gesture...</span>
+                        </div>
+                        <div class="macro-input" id="macroInput" style="display: none;">
+                            <input type="text" id="macroPhrase" placeholder="Enter phrase for this gesture">
+                            <button id="saveMacro">Save Macro</button>
+                        </div>
+                    </div>
+
+                    <div class="macros-list">
+                        <h3>Your Macros</h3>
+                        <div class="macro-items" id="macroItems">
+                            <div class="macro-item">
+                                <div class="macro-info">
+                                    <div class="macro-gesture">🤚 Emergency</div>
+                                    <div class="macro-phrase">"I have a severe nut allergy"</div>
+                                </div>
+                                <button class="delete-macro" data-id="1">Delete</button>
+                            </div>
+                            <div class="macro-item">
+                                <div class="macro-info">
+                                    <div class="macro-gesture">✋ Help</div>
+                                    <div class="macro-phrase">"I need immediate assistance"</div>
+                                </div>
+                                <button class="delete-macro" data-id="2">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="settingsPage" class="page">
+                <div class="settings-container">
+                    <div class="header">
+                        <h1>Settings</h1>
+                        <p class="subtitle">Customize your experience</p>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-icon">📱</div>
+                                <div class="setting-text">
+                                    <div class="setting-title">Haptic Feedback</div>
+                                    <div class="setting-desc">Vibrate on sign detection</div>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="hapticToggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-icon">🎤</div>
+                                <div class="setting-text">
+                                    <div class="setting-title">Audio Sniffer</div>
+                                    <div class="setting-desc">Monitor background noise</div>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="audioSnifferToggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-icon">🎨</div>
+                                <div class="setting-text">
+                                    <div class="setting-title">Dark Mode</div>
+                                    <div class="setting-desc">Switch theme</div>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-icon">🔊</div>
+                                <div class="setting-text">
+                                    <div class="setting-title">Voice Output</div>
+                                    <div class="setting-desc">Speak translated text</div>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="voiceOutputToggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>IoT Configuration</h3>
+                        <div class="setting-item">
+                            <input type="text" id="serverUrl" placeholder="WebSocket Server URL" value="ws://localhost:8080">
+                        </div>
+                        <button class="test-connection" id="testConnection">Test Connection</button>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>About</h3>
+                        <div class="about-info">
+                            <p>SmartSign v1.0.0</p>
+                            <p>Sign Language Translation & Smart Home Control</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
